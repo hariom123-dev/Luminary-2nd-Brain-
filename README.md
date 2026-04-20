@@ -12,16 +12,16 @@
 
 <div align="center">
   
-![Second Brain AI Hero Banner](https://via.placeholder.com/1200x600/0a0a0a/00d4ff?text=🧠+Second+Brain+AI+-+Your+Knowledge%2C+Supercharged)
+![Second Brain AI Hero Banner](assets/hero-banner.png)
   
 </div>
 
 ## 🚀 Quick Demo
 
 <div align="center">
-  <img src="https://via.placeholder.com/800x450/1a1a2e/00d4ff?text=💬+AI+Chat+with+Your+Own+Knowledge" alt="Demo GIF" width="600">
+  <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800" alt="Demo Preview" width="700" style="border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
   <br><br>
-  <em>*(Replace with your actual demo GIF/video)*</em>
+  <em>*(Live AI Intelligence Interface Preview)*</em>
 </div>
 
 ## ✨ Core Features
@@ -203,10 +203,7 @@ This project is licensed under the **MIT License** — use it for any purpose!
 Built with ❤️ and these amazing tools:
 
 <div align="center">
-  <a href="https://nextjs.org"><img src="https://via.placeholder.com/100x50/000000/ffffff?text=Next.js" alt="Next.js"></a>
-  <a href="https://reactjs.org"><img src="https://via.placeholder.com/100x50/61DAFB/000000?text=React" alt="React"></a>
-  <a href="https://openai.com"><img src="https://via.placeholder.com/100x50/000000/ffffff?text=OpenAI" alt="OpenAI"></a>
-  <a href="https://neo4j.com"><img src="https://via.placeholder.com/100x50/0088CE/ffffff?text=Neo4j" alt="Neo4j"></a>
+  <img src="https://skillicons.dev/icons?i=nextjs,react,mongodb,nodejs,aws,vercel,tailwind,ts" />
 </div>
 
 ## 🚀 Get Involved
