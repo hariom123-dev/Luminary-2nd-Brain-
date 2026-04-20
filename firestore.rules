@@ -1,0 +1,85 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // 0. Default Deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Reuseable helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isEmailVerified() {
+      return request.auth.token.email_verified == true;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // 1. User profiles
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidUser(request.resource.data);
+      allow update: if isOwner(userId) && isValidUser(request.resource.data) 
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name', 'avatar', 'synapses', 'efficiency', 'role']);
+      
+      function isValidUser(data) {
+        return data.keys().hasAll(['id', 'email', 'name'])
+          && data.id == request.auth.uid
+          && data.email is string
+          && data.name is string && data.name.size() <= 100
+          && (!('avatar' in data) || (data.avatar is string && data.avatar.size() <= 500))
+          && (!('synapses' in data) || data.synapses is int)
+          && (!('efficiency' in data) || data.efficiency is int);
+      }
+
+    // 2. Notes
+    match /notes/{noteId} {
+      allow list: if isOwner(userId);
+      allow get: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidNote(request.resource.data) && isValidId(noteId)
+        && request.resource.data.createdAt == request.time;
+      allow update: if isOwner(userId) && isValidNote(request.resource.data)
+        && request.resource.data.userId == resource.data.userId
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.updatedAt == request.time;
+      allow delete: if isOwner(userId);
+
+      function isValidNote(data) {
+        return data.keys().hasAll(['userId', 'title', 'content', 'type'])
+          && data.userId == request.auth.uid
+          && data.title is string && data.title.size() <= 200
+          && data.content is string && data.content.size() <= 50000
+          && data.type in ['note', 'article', 'pdf', 'video']
+          && (!('tags' in data) || (data.tags is list && data.tags.size() <= 20));
+      }
+    }
+
+    // 3. Insights
+    match /insights/{insightId} {
+      allow list: if isOwner(userId);
+      allow get: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidInsight(request.resource.data)
+        && request.resource.data.createdAt == request.time;
+      allow update: if false; // Insights are system-generated and immutable for the client
+      allow delete: if isOwner(userId);
+
+      function isValidInsight(data) {
+        return data.keys().hasAll(['userId', 'type', 'title', 'content'])
+          && data.userId == request.auth.uid
+          && data.type in ['correlation', 'lead', 'gap']
+          && data.title is string && data.title.size() <= 200
+          && data.content is string && data.content.size() <= 1000;
+      }
+    }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Stored user preferences and intellectual statistics.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "avatar": { "type": "string" },
+        "synapses": { "type": "integer" },
+        "efficiency": { "type": "integer" },
+        "role": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "email", "name"]
+    },
+    "Note": {
+      "title": "Knowledge Note",
+      "description": "A single unit of captured knowledge.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "summary": { "type": "string" },
+        "topic": { "type": "string" },
+        "type": { "type": "string", "enum": ["note", "article", "pdf", "video"] },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "linkedNodes": { "type": "array", "items": { "type": "string" } },
+        "sourceUrl": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "title", "content", "type"]
+    },
+    "Insight": {
+      "title": "AI Generated Insight",
+      "description": "Insights derived from user knowledge.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "type": { "type": "string", "enum": ["correlation", "lead", "gap"] },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "actionText": { "type": "string" },
+        "sourceLabel": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "type", "title", "content"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles and global stats."
+    },
+    "/users/{userId}/notes/{noteId}": {
+      "schema": "Note",
+      "description": "Personal notes for a specific user."
+    },
+    "/users/{userId}/insights/{insightId}": {
+      "schema": "Insight",
+      "description": "AI-generated insights for a specific user."
+    }
+  }
+}

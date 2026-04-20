@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+  
+  --color-brand-primary: #003057;
+  --color-brand-bg: #FFF2E0;
+  --color-brand-surface: #FFFFFF;
+  --color-brand-border: #E5E7EB;
+  --color-brand-accent: #FF6B00;
+  --color-brand-secondary: #6B9AC4;
+  --color-brand-highlight: #FFB86C;
+  --color-brand-text: #334155;
+  --color-brand-muted: #64748B;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-bg text-brand-text antialiased;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-white/80 backdrop-blur-md border border-brand-border shadow-sm;
+  }
+  
+  .btn-primary {
+    @apply bg-brand-primary text-white font-bold py-3 px-6 rounded-2xl hover:opacity-90 transition-all flex items-center justify-center gap-2;
+  }
+  
+  .btn-secondary {
+    @apply bg-white border border-brand-border text-brand-text font-semibold py-2 px-4 rounded-xl hover:bg-brand-bg transition-all flex items-center justify-center gap-2;
+  }
+  
+  .card {
+    @apply bg-brand-surface border border-brand-border rounded-[2rem] p-6 transition-all;
+  }
+  
+  .sidebar-link {
+    @apply flex items-center gap-3 px-6 py-4 text-brand-muted font-semibold transition-all hover:text-brand-primary;
+  }
+  
+  .sidebar-link-active {
+    @apply bg-brand-primary text-white hover:text-white rounded-2xl mx-4;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-brand-border rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-brand-muted/30;
+}
