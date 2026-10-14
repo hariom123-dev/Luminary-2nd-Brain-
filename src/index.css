@@ -4,12 +4,12 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Outfit", sans-serif;
-  
+   
   --color-brand-primary: #003057;
   --color-brand-bg: #FFF2E0;
   --color-brand-surface: #FFFFFF;
   --color-brand-border: #E5E7EB;
-  --color-brand-accent: #FF6B00;
+  --color-brand-accent: #FF6B00; 
   --color-brand-secondary: #6B9AC4;
   --color-brand-highlight: #FFB86C;
   --color-brand-text: #334155;
